@@ -47,6 +47,12 @@ The built in (system report) `duplicates` does not work very well.
 
 Email updates may well not work, see above.
 
+## System requirements
+I run this code on a Raspberry Pi 3.
+- Linux - 4.9.35-v7+ #1014 SMP
+- MySQL - Ver 14.14 Distrib 5.5.62, for debian-linux-gnu (armv8l) using readline 6.3
+- PHP - 5.6.40-0+deb8u8
+
 ## Notes
 Any reference in the code to `fastpi` is referring to the host the code is installed on. My local Raspberry Pi 3.
 
