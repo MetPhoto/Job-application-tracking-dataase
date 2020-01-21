@@ -12,6 +12,11 @@ It was a useful learning exercise - PHP, MySQL, HTML, CSS and a little Javascrip
 
 What I found difficult was trying to establish what 'best practice' looked like. For example what is the best approach for storing the database credentials or how best to create the SQL commands. The latter are all created manually inside the code, but this always felt this was inefficient. While it is easy to work out (from the internet) how to code a particular function it is not easy (from my experience) to establish the best design pattern, if that is not too grand a word for it!
 
+## The challenge
+Make my amateur code better. Tell me how to make it 'better', more secure, more efficient and easy to update & maintain.
+
+The code is very linear. There is no attempt to create background tasks or even reusable sub-routines. I am sure it can be improved.
+
 ## Functionality
 
 At its heart this is a simple database to store the details of a job application. The initial screen provides summary of the recent applications and a small sparkling-like chart at the top right showing the number of recent applications by week.
