@@ -1,7 +1,7 @@
 # Simple job application tracking database using PHP and MySQL
 ## Written by Mark Taylor
 
-This code is provided as is without any warranty. It is provided for educational purposes only.
+This code is provided "as is" without any warranty. It is provided for educational purposes only.
 
 Mark Taylor - January 2020.
 
@@ -28,7 +28,7 @@ At its heart this is a simple database to store the details of a job application
 - Debug mode - set `debug` to 1 in the `config` table to provide some additional information messages, there is no GUI for this. Note: the `Portal` link (see notes below) in the top left will turn red when debug is active.
 - Add an activity associated with an application.
 - Add a CV, a stored item when creating a job application.
-- Add a file, could be a PDF of a job description.
+- Add a file to an application, could be a PDF of a job description.
 - Add a report, a basic GUI for creating new user reports. There is no way to edit existing reports.
 - Add an alarm to a job application, for example to remind you to follow up on an application.
 - Search function, basic.
@@ -49,14 +49,14 @@ Email updates may well not work, see above.
 
 ## System requirements
 I run this code on a Raspberry Pi 3.
-- Linux - 4.9.35-v7+ #1014 SMP
+- Linux - 4.9.35-v7+ #1014 SMP (Raspbian / Debian)
 - MySQL - Ver 14.14 Distrib 5.5.62, for debian-linux-gnu (armv8l) using readline 6.3
 - PHP - 5.6.40-0+deb8u8
 
 ## Notes
-Any reference in the code to `fastpi` is referring to the host the code is installed on. My local Raspberry Pi 3.
+Any reference in the code to `fastpi` is a reference to the host the code is installed on. My local Raspberry Pi 3.
 
-Application code stored in `/var/www/jobs`.
+Application code ('web files') are stored in `/var/www/jobs`.
 
 The file `jobs/library/config.php` will need to be updated with the correct `server` name and MySQL user `password`.
 
