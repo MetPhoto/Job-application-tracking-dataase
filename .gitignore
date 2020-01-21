@@ -1,1 +1,2 @@
+# Hoping to exclude macOS .DS_Store files.
 .DS_Store
