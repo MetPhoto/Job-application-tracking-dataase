@@ -1,0 +1,137 @@
+/*
+Style sheet created by Mark Taylor.
+For the Job Application System project. Copied from the MetPhoto blog project.
+
+Created: 06/10/2012
+Last updated: 25/01/2013
+
+Revision history: 
+06/10/2012 - Initial creation.
+08/10/2012 - Added animation effect to the text boxes and set the fieldsets to float left.
+11/10/2012 - Further tweeks.
+10/11/2012 - Tweed the <legend> background colour.
+25/01/2013 - Added .clearfix so as to force form buttons to float back to the left (bottom) of a form.
+
+Comment.
+
+*/
+
+.clearfix {
+	clear: both;
+}
+
+#met-form fieldset {
+	margin: 1em;
+	font-size: 0.8em;
+	font-weight:300;
+	width: intrinsic;
+	box-shadow: 4px 4px 7px rgba(0,0,0,0.4);
+	border-radius: 8px;
+	color: rgba(255, 255, 255, 0.6);
+	float: left;
+}
+
+#met-form legend {
+	background-color: rgba(70,135,220,0.45);
+	box-shadow: 4px 4px 7px rgba(0,0,0,0.4);
+	color: white;
+	letter-spacing: 0.1em;
+	border-radius: 4px;
+	padding-left: 1em;
+	padding-right: 1em;
+	padding-bottom: 0.2em;
+	padding-top: 0.2em;
+}
+
+#met-form label {
+	line-height: 1.4em;
+	letter-spacing: 0.1em;
+	color: white;
+}
+
+#met-form input[type="text"], textarea, input[type="url"], input[type="tel"], input[type="number"], input[type="date"], input[type="time"], input[type="email"]{
+	padding:5px 8px;
+	font-size:1em;
+	color:#fff;
+	border:none;
+	background-color:rgba(170,170,170,1);
+	-webkit-border-radius:4px;
+	-moz-border-radius:4px;
+	-o-border-radius:4px;
+	border-radius:4px;
+	-webkit-box-shadow:inset 3px 3px 3px rgba(0,0,0,0.5);
+	display: block;
+}
+
+/* Style the buttons. */
+ input[type="submit"], input[type="button"], input[type="reset"], input[type="checkbox"], select {
+	padding:4px 8px;
+	border:none;
+	text-shadow:0 1px 1px rgba(255,255,255,0.85);
+	background-image:-webkit-gradient(linear,0% 0%,0% 100%,from(#fff),to(#aaa));
+	background-color:#fff;
+	-webkit-border-radius:6px;
+	-moz-border-radius:6px;
+	-o-border-radius:6px;
+	border-radius:6px;
+	-webkit-box-shadow:0 1px 2px rgba(0,0,0,0.5);
+	-moz-box-shadow:0 1px 2px rgba(0,0,0,0.5);
+	-o-box-shadow:0 1px 2px rgba(0,0,0,0.5);
+	display: block;
+}
+
+#met-form div label input[type="checkbox"] {
+	  width: 13px;
+    height: 13px;
+    padding: 0;
+    margin:0;
+    position: relative;
+    top: -15px;
+    text-indent: 17px;
+    overflow: hidden;
+}
+
+#met-form div label {
+    display: block;
+    padding-left: -15px;
+    text-indent: 17px;
+}
+
+#met-form input[type="file"] {
+	padding:4px 0px;
+	color: white;
+	border-radius:6px;
+}
+
+#met-form input[type="submit"]:hover, input[type="button"]:hover, input[type="reset"]:hover, select:hover {
+	background-image:-webkit-gradient(linear,0% 0%,0% 100%,from(#fff),to(#ccc));
+}
+
+/* Place the buttons below the form. */
+#met-form .buttons {
+	clear: both;
+	float: left;
+}
+
+/* Make each button float to right of the one to its left. */
+#met-form .but_float{
+	float: left;
+}
+
+#met-form .monospace{
+	font-family: monospace;
+}
+
+/* This from the 'Book Apart' guide 'CSS3 for Web Designers'. */
+@-webkit-keyframes pulse {
+0%   { -webkit-box-shadow: 0 0 12px rgba(70,135,220,0.2); }
+50%  { -webkit-box-shadow: 0 0 12px rgba(70,135,220,0.5); }
+100% { -webkit-box-shadow: 0 0 12px rgba(70,135,220,1.0); }
+}
+
+#met-form input[type="text"]:focus, input[type="number"]:focus, input[type="tel"]:focus, input[type="url"]:focus, input[type="email"]:focus, textarea:focus {
+	-webkit-animation-name: pulse;
+	-webkit-animation-duration: 1.5s;
+	-webkit-animation-iteration-count: infinite;
+	-webkit-animation-timing-function: ease-in-out;
+}

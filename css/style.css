@@ -1,0 +1,200 @@
+/*
+Style sheet created by Mark Taylor.
+For the Jobs project.
+http://fastpi/jobs/
+
+Created: 06/10/2012
+Last updated: 18/05/2013
+
+Revision history: 
+06/10/2012 - Initial creation.
+10/10/2012 - Minor tweeks.
+22/04/2013 - Added link back to the FastPi portal.
+27/04/2013 - Changed menu so it is now a drop down style for the reporting section.
+18/05/2013 - Added a media query to hide columns when the browser window shrinks.
+*/
+
+body {
+	background-image:url(../images/wild_oliva.png);
+	color:#fff;
+	font-family:"Helvetica Neue",sans-serif;
+}
+
+.clearfix {
+	clear: both;
+}
+
+/* Hide every other column (2n) starting at the 5th column (+5) of the 'summary' table when the browser width falls below 1100px. */
+/*
+@media screen and (max-width:900px) {
+#summary thead th:nth-child(2n+5), #summary tbody td:nth-child(2n+5){
+	background-color: red;
+	display: none;
+  }
+}
+*/
+
+/*
+@media screen and (max-width:1200px) and (min-width:901px) {
+#summary thead th:nth-child(3n+5), #summary tbody td:nth-child(3n+5){
+	background-color: red;
+	display: none;
+  }
+}
+*/
+	
+.spark {
+	background-color:#fff;
+	top:0;
+	right:0;
+	margin-top:12px;
+	margin-right:20px;
+	position:absolute;
+	-webkit-box-shadow:4px 4px 7px rgba(0,0,0,0.9);
+	-moz-box-shadow:4px 4px 7px rgba(0,0,0,0.9);
+	-o-box-shadow:4px 5px 7px rgba(0,0,0,0.9);
+	box-shadow:4px 4px 7px rgba(0,0,0,0.9);
+}
+
+.alarm{
+	color: rgba(244,200,110,1);
+}
+
+.portal {
+	background-color:#787878;
+	width:60px;
+	text-align:center;
+	padding-top:5px;
+	padding-bottom:5px;
+	margin-right:20px;
+	border-radius:3px;
+	float:left;
+	border:1px #fff solid;
+	color:#fff;
+	box-shadow:4px 4px 7px rgba(0,0,0,0.9);
+}
+
+.portal:hover {
+	background-color:#4788dc;
+}
+
+a {
+	text-decoration:none;
+	color:#ccd8ee;
+}
+
+.headline {
+	font-size:1.6em;
+	letter-spacing:.1em;
+	text-shadow:4px 4px 7px rgba(0,0,0,0.9);
+}
+
+.debug{
+	font-family: monospace;
+}
+
+/* Inserted by jQuery if DEBUG is turned on. */
+.portaldebug{
+	background-color: rgb(255,90,60);
+}
+
+/* !Start of nav. */
+nav {
+	text-align:left;
+	margin-top:1.5em;
+	margin-bottom:1.5em;
+}
+
+nav ul ul {
+	display:none;
+}
+
+/* Z index ensues the menu appears above any forms below. */
+nav ul li:hover > ul {
+	display:block;
+	z-index: 100;
+}
+
+nav ul {
+	background:#efefef;
+	background:linear-gradient(top,#efefef 0%,#bbb 100%);
+	background:-moz-linear-gradient(top,#efefef 0%,#bbb 100%);
+	background:-webkit-linear-gradient(top,#efefef 0%,#bbb 100%);
+	box-shadow:4px 4px 7px rgba(0,0,0,0.9);
+	padding:0 10px;
+	border-radius:5px;
+	list-style:none;
+	position:relative;
+	display:inline-table;
+}
+
+nav ul:after {
+	content:"";
+	clear:right;
+	display:block;
+}
+
+nav ul li {
+	float:left;
+}
+
+nav ul li:hover {
+	background:#4b545f;
+	background:linear-gradient(top,#4f5964 0%,#5f6975 40%);
+	background:-moz-linear-gradient(top,#4f5964 0%,#5f6975 40%);
+	background:-webkit-linear-gradient(top,#4f5964 0%,#5f6975 40%);
+}
+
+nav ul li:hover a {
+	color:#fff;
+}
+
+nav ul li a {
+	display:block;
+	padding:10px 15px;
+	color:#757575;
+	text-decoration:none;
+}
+
+nav ul ul {
+	background:#5f6975;
+	border-radius:0;
+	padding:0;
+	position:absolute;
+	top:100%;
+}
+
+nav ul ul li {
+	float:none;
+	border-top:1px solid #6b727c;
+	border-bottom:1px solid #575f6a;
+	position:relative;
+}
+
+nav ul ul li a {
+	padding:5px 20px;
+	color:#fff;
+}
+
+nav ul ul li a:hover {
+	background:#4b545f;
+}
+
+nav a.current {
+	background:#4b545f;
+	background:linear-gradient(top,#4f5964 0%,#5f6975 40%);
+	background:-moz-linear-gradient(top,#4f5964 0%,#5f6975 40%);
+	background:-webkit-linear-gradient(top,#4f5964 0%,#5f6975 40%);
+	color:#fff;
+}
+/* !End of nav. */
+
+.copyright {
+	position:absolute;
+	z-index:-100;
+	left:1em;
+	top: 0;
+	margin-top:0.3em;
+	font-size:.8em;
+	color:rgba(255,255,255,0.4);
+}

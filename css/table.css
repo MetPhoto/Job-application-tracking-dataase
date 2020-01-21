@@ -1,0 +1,66 @@
+/*
+Style sheet created by Mark Taylor.
+For the Jobs project.
+http://fastpi/jobs/
+
+Created: 06/10/2012
+Last updated: 10/11/2012
+
+Revision history: 
+06/10/2012 - Initial creation.
+01/11/2012 - Added a style to centre text in certain cells, td[name='centre'].
+10/11/2012 - Tweeked the role over style.
+*/
+
+.top-summary {
+	border-collapse:collapse;
+	font-size: 0.9em;	
+}
+
+.top-summary th,td {
+	border:1px #4788dc solid;
+	font-weight:300;
+	padding-left:.3em;
+	padding-right:.3em;
+	text-align:center;
+}
+
+#summary {
+	font-size:.9em;
+	color:#fff;
+}
+
+#summary th,caption,td {
+	border:#4788dc solid 1px;
+	font-weight:300;
+	text-align:center;
+	border:#4788dc solid 1px;
+	padding-left:1em;
+	padding-right:1em;
+	font-size:.8em;
+}
+
+#summary td {
+	border:none;
+	padding:inherit;
+	text-align:left;
+}
+
+/* Centre the text in certain <td> cells. */
+#summary .centre {
+	text-align:center;
+}
+
+#summary tr:hover {
+	background-color:rgba(0,0,0,0.22);
+}
+
+#summary thead tr:nth-child(1):hover {
+	background-color:rgba(0,0,0,0);
+}
+
+.chase{
+	background-color: #3768cc;
+	border-radius: 5px;
+	color: white;
+}

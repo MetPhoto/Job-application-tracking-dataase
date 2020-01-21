@@ -1,0 +1,36 @@
+/*
+Style sheet created by Mark E. Taylor.
+For the jobs project.
+http://fastpi/jobs/
+
+Created: 07/10/2012
+Last updated: 25/04/2013
+
+Revision history: 
+07/10/2012 - Initial creation.
+25/04/2013 - Updated to remove the 'Portal' link when printing.
+*/
+
+@page {
+	size:landscape;
+	margin:1cm;
+}
+
+body {
+	background-color:#fff;
+	font-family:Helvetica,sans-serif;
+	color:#000;
+}
+
+table,th,tr,td {
+	border:1px solid rgba(0,0,0,0.3);
+	border-collapse:collapse;
+	font-size:.8em;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
+nav,.copyright,input[type='button'],#sparkline, .portal {
+	visibility:hidden;
+	display:none;
+}
