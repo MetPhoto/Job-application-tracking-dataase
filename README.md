@@ -21,9 +21,9 @@ The code is very linear. There is no attempt to create background tasks or even 
 
 At its heart this is a simple database to store the details of a job application. The initial screen provides summary of the recent applications and a small sparkling-like chart at the top right showing the number of recent applications by week.
 
-- Configuration stored in MySQL database, with a GUI to amend some values.
+- Configuration stored in MySQL database, with a GUI to amend some configuration items.
 - Click on a column header on the summary page to hide the column. Refresh the page to unhide a column.
-- Summary page is configurable. The `status` summary is created dynamically. If a new status is added the table will still work. Status values are stored in a database table called `dropdown` (not ideal).
+- Summary page is configurable. The `status` summary is created dynamically. If a new status is added then the table will still work. Status values are stored in a database table called `dropdown` (not ideal).
 - Table names are stored in the config database. Allows you to swap to a database table of dummy data for demonstration purposes.
 - Debug mode - set `debug` to 1 in the `config` table to provide some additional information messages, there is no GUI for this. Note: the `Portal` link (see notes below) in the top left will turn red when debug is active.
 - Add an activity associated with an application.
@@ -45,7 +45,7 @@ The code does not check if a record has been successfully inserted or updated.
 
 The built in (system report) `duplicates` does not work very well.
 
-Email updates may well not work, see above.
+Email updates may well not work at all, see above.
 
 ## System requirements
 I run this code on a Raspberry Pi 3.
@@ -59,5 +59,7 @@ Any reference in the code to `fastpi` is a reference to the host the code is ins
 Application code ('web files') are stored in `/var/www/jobs`.
 
 The file `jobs/library/config.php` will need to be updated with the correct `server` name and MySQL user `password`.
+
+MySQL account set in the config file, currently set to `jobs`.
 
 The `Portal` link at the top left provides a link back to local web based portal. This hosts links to my favourite local applications and web sites.  The default home page for my web browser on my iMac.
