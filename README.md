@@ -1,7 +1,7 @@
 # Simple job application tracking database using PHP and MySQL
 ## Written by Mark Taylor
 
-This code is provided "as is" without any warranty. It is provided for educational purposes only.
+This code is provided "as is" without any warranty. It is provided for educational purposes only. See MIT license.
 
 Mark Taylor - January 2020.
 
