@@ -16,6 +16,7 @@ Revision history:
 12/09/2013 - *** not yet finished *** Added some code to check for the status of the session *** not yet finished ***.
 18/09/2013 - Updated to accomadate the newly added 'contract' field.
 05/03/2014 - Added a section to display 'arlams'.
+08/02/2020 - Added code to change the status of existing applications wih a status of submitted which are XX days old to 'submitted and ignored'.
 
 Description: Shows a summary of the job applications made and stored in the database.
 */
@@ -28,7 +29,26 @@ include_once("includes/header-navigation.php");
 
 echo "<article>\n<div class='content'>";
 
-/* !The alarms for today. */
+/* Updates the status of an application to a new status if it is more than XX days old. */
+/* UPDATE_STATUS_DAYS is a constant. */
+$days = UPDATE_STATUS_DAYS;
+
+/* UPDATE_STATUS_TO_ID is a contstant. The ID number of the status to update to. */
+/* Get the new status name from the ID number. */
+/* This is way to complex! It does allow the status descrption to be changed. */
+$new_status_id = UPDATE_STATUS_TO_ID;
+$query = "SELECT menutext from dropdown where id=".UPDATE_STATUS_TO_ID;
+$result = $database_object->query($query);
+$row = $result->fetch_row();
+$new_status_name = $row[0];
+
+/* Now update each of the applications to the new status. */
+$query = "UPDATE ".APP_TABLE." SET status='$new_status_name' WHERE DATE(DATE) < (SELECT CURRENT_DATE - INTERVAL $days DAY) AND STATUS='submitted'";
+$result = $database_object->query($query);
+/* Get the number of applications which had their status changed. */
+$rowcount = $database_object->affected_rows;
+
+/* The alarms for today. */
 $query = "SELECT * FROM ".ALARMS_TABLE." WHERE DATE(alarmdate)=DATE(NOW())";
 $result = $database_object->query($query);
 
@@ -41,32 +61,32 @@ echo "<p>Alarms set for today:</p>";
 	}
 }
 
-/* !The total number of applications, count(*) as some columns may be blank. */
+/* The total number of applications, count(*) as some columns may be blank. */
 $query = "SELECT count(*) AS count FROM ".APP_TABLE;
 $result = $database_object->query($query);
 $row = $result->fetch_assoc();
 $number_of_jobs = $row['count'];
 
-/* !The total number of applications in the last 7 days. */
+/* The total number of applications in the last 7 days. */
 $query = "SELECT count(*) AS count FROM ".APP_TABLE." WHERE date>CURDATE()-INTERVAL ".SUMMARY_REPORTING_DAYS." DAY";
 $result = $database_object->query($query);
 $row = $result->fetch_assoc();
 $number_of_jobs_last_7_days = $row['count'];
 
-/* !The last time a job was added to the database. */
+/* The last time a job was added to the database. */
 $query = "SELECT MAX(date) as date FROM ".APP_TABLE;
 $result = $database_object->query($query);
 $row = $result->fetch_assoc();
 $last_update = $row['date'];
 
-/* !Convert the result to a data object. */
+/* Convert the result to a date object. */
 $date_of_last_update = new DateTime($last_update);
 
-/* !Get a date object for right now. */
+/* Get a date object for right now. */
 $today = new DateTime('now');
-/* !Get the difference between today's date and the date of the last update. */
+/* Get the difference between today's date and the date of the last update. */
 $interval = $date_of_last_update->diff($today);
-/* !Convert $interval to a number, not a date object. */
+/* Convert $interval to a number, not a date object. */
 $interval_number = $interval->format('%a');
 
 /* Create the date of the last update. Either as 'today' or the previous date. */
@@ -87,19 +107,21 @@ if(isset($_SESSION['userid'])){
 
 echo "<p>A total of $number_of_jobs_last_7_days applications were made in the last ".SUMMARY_REPORTING_DAYS." days, the last was made $date_formated</p>";
 
-/* !The total number of applications with a the 'follow up' flag set. */
+echo "<p>Applications which are $days days old have been updated to the status '$new_status_name'. The number updated today was $rowcount.</p>";
+
+/* The total number of applications with a the 'follow up' flag set. */
 $query = "SELECT count(follow_up) FROM ".APP_TABLE." WHERE follow_up=TRUE";
 $result = $database_object->query($query);
 $row = $result->fetch_row();
 $follow_up_number = $row[0];
 
-/* !The total number of applications with a the 'contract' flag set. */
+/* The total number of applications with a the 'contract' flag set. */
 $query = "SELECT count(contract) FROM ".APP_TABLE." WHERE contract=TRUE";
 $result = $database_object->query($query);
 $row = $result->fetch_row();
 $contract = $row[0];
 
-/* !Get the count of each status if it is > 0. Does not require you to know the name of the 'status' messages in advance.
+/* Get the count of each status if it is > 0. Does not require you to know the name of the 'status' messages in advance.
 Creates a result like this:
 submitted	670
 Sent follow up email	4
@@ -108,7 +130,7 @@ Rejected	53
 $query = "SELECT DISTINCT(status) as status_name, COUNT(status) as status_count FROM ".APP_TABLE." GROUP by status ORDER BY status DESC";
 $result = $database_object->query($query);
 
-/* !Start of the summary table. */
+/* Start of the summary table. */
 echo "\n<table class='top-summary'>\n";
 echo "<caption>Applications by status</caption>\n";
 
@@ -135,12 +157,12 @@ while($line = $result->fetch_assoc()){
 	echo "<td>$line[status_count]</td>";
 };
 
-/* !End of the row that holds the data and the table. */
+/* End of the row that holds the data and the table. */
 echo "</tr>\n</tbody>\n</table>\n";
 
 $result->free_result();
 
-/* !Start of the table that shows the recent applicaitons. Limited by SUMMARY_NUMBER.  */
+/* Start of the table that shows the recent applicaitons. Limited by SUMMARY_NUMBER.  */
 $query = "SELECT id, DATE_FORMAT(date, '%d/%m/%y') AS date_formated, role, reference, day_rate, salary_low, salary_high, via, company, contact_name, contact_email, url, agency, status, follow_up, last_name, first_name FROM ".APP_TABLE." ORDER BY ID DESC LIMIT ".SUMMARY_NUMBER;
 $result = $database_object->query($query);
 
@@ -168,7 +190,7 @@ $edited_email = preg_replace("/.[0-9].*@/ui", "@", $line['contact_email']);
 	echo "<tr>\n";
 	echo "<td class='centre'><a href='edit_job.php?id=$line[id]'>$line[id]</a></td><td class='centre'>$follow_up</td><td>$line[date_formated]</td><td>";
 	
-/* !Only add the URL link if one exists in the database. */
+/* Only add the URL link if one exists in the database. */
 	if($line['url']!=""){
 		echo "<a href='".htmlentities($line['url'])."' target='_blank'>".substr($line['role'],0,COL_WIDTH_ROLE)."</a>";
 	} else {

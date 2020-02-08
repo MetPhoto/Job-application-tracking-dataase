@@ -5,9 +5,9 @@
 # http://www.sequelpro.com/
 # https://github.com/sequelpro/sequelpro
 #
-# Host: 192.168.1.65 (MySQL 5.5.62-0+deb8u1)
+# Host: fastpi.local (MySQL 5.5.62-0+deb8u1)
 # Database: jobs
-# Generation Time: 2020-01-21 12:52:43 +0000
+# Generation Time: 2020-02-08 21:57:01 +0000
 # ************************************************************
 
 
@@ -31,7 +31,7 @@ CREATE TABLE `config` (
   `value` blob NOT NULL,
   `comment` text,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='A table that defines a set of variables to be used by the application.';
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8 COMMENT='A table that defines a set of variables to be used by the application.';
 
 LOCK TABLES `config` WRITE;
 /*!40000 ALTER TABLE `config` DISABLE KEYS */;
@@ -69,7 +69,9 @@ VALUES
 	(30,'browse_number','25','The number of applications to show on each page of the \'browse\' pages.'),
 	(31,'follow_up_email_address','name@example.com','The email address to which follow up emails will be sent.'),
 	(33,'send_email_days','a:7:{s:6:"Sunday";s:2:"no";s:6:"Monday";s:3:"yes";s:7:"Tuesday";s:3:"yes";s:9:"Wednesday";s:3:"yes";s:8:"Thursday";s:3:"yes";s:6:"Friday";s:3:"yes";s:8:"Saturday";s:2:"no";}','Days of the week to send out the emails.'),
-	(34,'alarms_table','alarms','The table that holds details of alarms set for applications.');
+	(34,'alarms_table','alarms','The table that holds details of alarms set for applications.'),
+	(35,'update_status_days','10','Days in the past when to set the status to a new value, proably \'submitted and ignored\'.'),
+	(36,'update_status_to_id','10','The ID number of the status messages to set for applications which are update_status_days old.');
 
 /*!40000 ALTER TABLE `config` ENABLE KEYS */;
 UNLOCK TABLES;
