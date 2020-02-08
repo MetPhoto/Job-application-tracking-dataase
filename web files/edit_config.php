@@ -2,13 +2,14 @@
 /*
 Author by: Mark E Taylor
 Created: 10/10/2012
-Last updated: 24/02/2014
+Last updated: 08/02/2020
 
 Revision history: 
 10/10/2012 - Initial creation.
 28/04/2013 - Added new configuration item SUMMARY_REPORTING_DAYS.
 07/12/2013 - Added new configuration item BROWSW_NUMBER.
 24/02/2014 - Added section to define when email updates are sent out or not.
+08/02/2020 - Added an option to set the numbers of daya after which the status of any application is automatically set to 'Submitted and ignored'. 
 
 Description: Sets configutation items for the application.
 
@@ -63,6 +64,9 @@ echo "<input type='number' name='col_width_filename' min=1 max=160 value=".COL_W
 
 echo "<label>Maximum size of files (PDFs) that can be uploaded in bytes:</label>\n";
 echo "<input type='number' name='max_uploaded_file_size' min=1 max=".MAX_UPLOADED_FILE_SIZE." value=".MAX_UPLOADED_FILE_SIZE.">\n";
+
+echo "<label>Days after which the status of an application should be changed to 'Submitted and ignored'</label>\n";
+echo "<input type='number' name='update_status_days' min=1 max=20 value=".UPDATE_STATUS_DAYS.">\n";
 
 echo "<label>Email address for the follow up emails:</label>\n";
 echo "<input type='text' name='follow_up_email_address' size='30' value=".FOLLOW_UP_EMAIL_ADDRESS.">\n";
