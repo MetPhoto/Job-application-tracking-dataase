@@ -29,13 +29,91 @@ include_once("includes/header-navigation.php");
 
 echo "<article>\n<div class='content'>";
 
-/* Updates the status of an application to a new status if it is more than XX days old. */
+/* ****************************************************************************** */
+/* Store in memory the number applications which had their status changed today. */
+/* Necessary becasue the web page could be refressed and show the wrong number of applications that hae their staturs chaneged. */
+/* This is only necessary becasuse the application record update code runs in this page. */
+/* Either the update code could sit out side this page and be called once be day, or the values could be store in MySQL. */
+/* Storing the values in memory (memcache) is fun and fast! */
+
+/* Set up memcache and get the handle to the in-memory database. */
+
+$mc_handle = met_memcache_setup ();
+
+/* Read the value of the status change count and date from memory. */
+global $new_status_count;
+global $new_status_name;
+global $days;
 /* UPDATE_STATUS_DAYS is a constant. */
 $days = UPDATE_STATUS_DAYS;
 
-/* UPDATE_STATUS_TO_ID is a contstant. The ID number of the status to update to. */
+$mc_status_value = met_memcahce_read ($mc_handle, "new_status_count");
+$mc_date_value = met_memcahce_read ($mc_handle, "today");
+
+/* If the date is not found in memory then store a new date object and new_status_count value in memory. */
+if ( $mc_date_value == FALSE) {
+	$current_date = new DateTime('now');
+
+	list($new_status_count, $new_status_name) = set_new_status ($database_object, $days);
+
+	$value_name = "new_status_count";
+	$mc_store_sucess = met_memcache_set ($mc_handle, $value_name, $new_status_count);
+	
+	$value_name = "today";
+	$mc_store_sucess = met_memcache_set ($mc_handle, $value_name, $current_date);
+} else {
+	$current_date = new DateTime('now');
+	
+	$i = $mc_date_value->diff($current_date);
+	/* Convert $i to a number, not a date object. */
+	$interval = $i->format('%a');
+
+/* If the status update date is more than one day ago then it needs to be refreshed.  */
+	if ($interval > 0) {
+		
+	/* The function that sets the new status. */
+		list($new_status_count, $new_status_name) = set_new_status ($database_object, $days);
+		
+		$value_name = "new_status_count";
+		$mc_store_sucess = met_memcache_replace ($mc_handle, $value_name, $new_status_count);
+	
+		$value_name = "today";
+		$current_date = new DateTime('now');
+		$mc_store_sucess = met_memcache_replace ($mc_handle, $value_name, $current_date);
+	}
+}
+
+function met_memcache_set ($mc_handle, $value_name, $value) {
+	$suceess = $mc_handle->set($value_name, $value); 
+	
+	return $suceess; 
+}
+
+function met_memcache_replace ($mc_handle, $value_name, $value) {
+	$suceess = $mc_handle->replace($value_name, $value); 
+	
+	return $suceess; 
+}
+
+function met_memcahce_read ($mc_handle, $read) {
+	$value = $mc_handle->get($read);
+	
+ 	return $value; 
+}
+
+function met_memcache_setup () {
+	$mc = new Memcached(); 
+    $mc->add("localhost", 11211); 
+    
+    return $mc;
+}
+
+function set_new_status ($database_object, $days) {
+/* Updates the status of an application to a new status if it is more than XX days old. */
+
+/* UPDATE_STATUS_TO_ID is a contstant. The ID number of the status message to change an application to. */
 /* Get the new status name from the ID number. */
-/* This is way to complex! It does allow the status descrption to be changed. */
+/* This is way too complex! It does allow the status descrption to be changed and the ID to remain the same. */
 $new_status_id = UPDATE_STATUS_TO_ID;
 $query = "SELECT menutext from dropdown where id=".UPDATE_STATUS_TO_ID;
 $result = $database_object->query($query);
@@ -46,7 +124,11 @@ $new_status_name = $row[0];
 $query = "UPDATE ".APP_TABLE." SET status='$new_status_name' WHERE DATE(DATE) < (SELECT CURRENT_DATE - INTERVAL $days DAY) AND STATUS='submitted'";
 $result = $database_object->query($query);
 /* Get the number of applications which had their status changed. */
-$rowcount = $database_object->affected_rows;
+$n = $database_object->affected_rows;
+
+return array ($n, $new_status_name);
+}
+/* ****************************************************************************** */
 
 /* The alarms for today. */
 $query = "SELECT * FROM ".ALARMS_TABLE." WHERE DATE(alarmdate)=DATE(NOW())";
@@ -107,7 +189,7 @@ if(isset($_SESSION['userid'])){
 
 echo "<p>A total of $number_of_jobs_last_7_days applications were made in the last ".SUMMARY_REPORTING_DAYS." days, the last was made $date_formated</p>";
 
-echo "<p>Applications which are $days days old have been updated to the status '$new_status_name'. The number updated today was $rowcount.</p>";
+echo "<p>Applications which are $days days old have been updated to the status '$new_status_name'. The number updated today was $new_status_count.</p>";
 
 /* The total number of applications with a the 'follow up' flag set. */
 $query = "SELECT count(follow_up) FROM ".APP_TABLE." WHERE follow_up=TRUE";
